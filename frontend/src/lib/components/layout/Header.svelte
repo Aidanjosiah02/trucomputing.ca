@@ -6,14 +6,14 @@
 	import { Button } from '$lib/components/ui/button/index.js';
 	import * as DropdownMenu from '$lib/components/ui/dropdown-menu/index.js';
 	import H3 from '../ui/typography/H3.svelte';
-	import type Club from '$lib/types/club';
+	import type { Club, ClubKey } from '$lib/types/club';
 	import * as NavigationMenu from '$lib/components/ui/navigation-menu/index.js';
 	import type { HeaderElement } from '$lib/types/page';
 	import { IsMobile } from '$lib/hooks/is-mobile.svelte.js';
 
 	const isMobile = new IsMobile();
 
-	let { selectedClub, clubs, navbarData }: { selectedClub: Club | undefined; clubs: Record<string, Club>; navbarData: HeaderElement[] } = $props();
+	const { selectedClub, clubs, navbarData }: { selectedClub: Club | undefined; clubs: Record<ClubKey, Club>; navbarData: HeaderElement[] } = $props();
 	const socials: Record<string, Social> | undefined = $derived(selectedClub?.socials);
 	// Give TRU Computing a logo when selectedClub == undefined.
 
@@ -26,6 +26,9 @@
 		href: string;
 		content: string | undefined;
 	};
+
+	import { buttonVariants } from "$lib/components/ui/button/index.js";
+	import * as Dialog from "$lib/components/ui/dialog/index.js";
 </script>
 
 {#snippet ContentEntry({ title, content, href, class: className, ...restProps }: ListItemProps)}
@@ -50,8 +53,23 @@
 		<NavigationMenu.List class="flex-wrap">
 			{#each navbarData as element}
 				<NavigationMenu.Item>
-					{#if element.entries}
-						<NavigationMenu.Trigger>{element.title}</NavigationMenu.Trigger>
+					{#if element.title == "Calendar"}
+						<Dialog.Root >
+							<Dialog.Trigger class={navigationMenuTriggerStyle()}>Calendar</Dialog.Trigger>
+							<Dialog.Content class="">
+								<Dialog.Header>
+									<Dialog.Title>Club Calendar</Dialog.Title>
+									<Dialog.Description>
+										Live club calendar in case event cards are not up to date.
+									</Dialog.Description>
+								</Dialog.Header>
+								<div class="grid gap-4">
+									<iframe class="border-2 w-192 h-160" title="Club Calendar from Google" src="{element.url}" scrolling="no"></iframe>
+								</div>
+							</Dialog.Content>
+						</Dialog.Root>
+					{:else if element.entries}
+						<NavigationMenu.Trigger class={buttonVariants({ variant: "secondary" })}>{element.title}</NavigationMenu.Trigger>
 						<NavigationMenu.Content>
 							{#if element.entries.some((entry) => 'image' in entry)}
 								<ul class="grid gap-2 p-2 md:w-96 lg:w-lg lg:grid-cols-[1fr_1fr]">
@@ -104,7 +122,7 @@
 <header class="sticky top-0 z-50 border-b bg-background/50 py-4 shadow-sm backdrop-blur-sm">
 	<div class="mx-auto grid w-11/12 max-w-7xl grid-cols-[auto_1fr_auto] gap-y-2 lg:items-center">
 		<!-- Club selector -->
-		<div class="col-start-1 row-start-1">
+		<div class="col-start-1 row-start-1 mr-2">
 			<DropdownMenu.Root>
 				<DropdownMenu.Trigger>
 					{#snippet child({ props })}
@@ -119,10 +137,10 @@
 				<DropdownMenu.Content class="w-64" align="start">
 					<DropdownMenu.Label>Clubs</DropdownMenu.Label>
 					<DropdownMenu.Group>
-						{#each Object.values(clubs) as club}
+						{#each Object.entries(clubs) as [slug, club]}
 							<DropdownMenu.Item class="cursor-pointer">
 								{#snippet child({ props })}
-									<a href={club.url} {...props}>
+									<a href={`/club/${slug}`} {...props}>
 										<img class="h-8 w-8 shrink-0 rounded-sm object-contain" src={club.image} alt="" />
 										<span class="truncate">{club.name}</span>
 									</a>

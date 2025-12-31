@@ -81,3 +81,5 @@ PS C:\Users\user\OneDrive - Thompson Rivers University\Documents\Vault\Projects\
 ```
 
 ### To-do
+
+Check if page data currently is loading before or after rendering starts. If after, use a +page.ts module that exports a load function.

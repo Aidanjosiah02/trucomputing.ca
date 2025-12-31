@@ -2,7 +2,6 @@
 	"comp": {
 		"name": "Computing Science",
 		"image": "https://trusu.ca/wp-content/uploads/2024/12/Computer-Science-Club-.webp",
-		"url": "/comp",
 		"socials": {
 			"discord": {
 				"url": "https://discord.gg/UEGuccvBRy",
@@ -23,12 +22,10 @@
 	},
 	"cyber": {
 		"name": "Cyber Security",
-		"image": "https://trusu.ca/wp-content/uploads/2024/12/Cyber-Security-Club-1-1.png",
-		"url": "/cyber"
+		"image": "https://trusu.ca/wp-content/uploads/2024/12/Cyber-Security-Club-1-1.png"
 	},
 	"game": {
 		"name": "Game Development",
-		"image": "https://trusu.ca/wp-content/uploads/2024/12/Game-Development-Club-1-1.webp",
-		"url": "/game"
+		"image": "https://trusu.ca/wp-content/uploads/2024/12/Game-Development-Club-1-1.webp"
 	}
 }

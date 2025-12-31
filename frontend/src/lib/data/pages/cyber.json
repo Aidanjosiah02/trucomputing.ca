@@ -1,20 +1,24 @@
 {
 	"navbar": [
 		{
-			"title": "Calendar",
-			"url": "https://calendar.google.com/calendar/embed?src=business%40aidanjosiah.com&ctz=America%2FVancouver"
+			"title": "Get Involved",
+			"url": "/"
+		},
+		{
+			"title": "Events",
+			"url": "/"
 		},
 		{
 			"title": "Board Meeting",
-			"url": "#meetings"
+			"url": "/"
 		},
 		{
 			"title": "Members",
-			"url": "/members"
+			"url": "/"
 		}
 	],
 	"hero": {
-		"title": "TRU's Computer Science Club",
+		"title": "TRU's Cyber Security Club",
 		"content": "",
 		"color": "white",
 		"image": "/images/heros/alexandre-debieve-FO7JIlwjOtU-unsplash.jpg"

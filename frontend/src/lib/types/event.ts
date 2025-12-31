@@ -1,22 +1,25 @@
 import type { ClubKey } from '$lib/types/club';
+import type { EventImage, Repeat } from './common';
 
-export interface EventString {
+export interface EventTimeString {
+	clubs: ClubKey[];
 	title: string;
 	description: string;
 	time: string;
 	location: string;
-	image: string;
-	image_has_info?: boolean; // Setting to true hides the title, description, time, location, and club on card. Careful of accessibility issues.
-	url?: string; // Link to event attendance form.
+	image?: EventImage;
+	url?: string;
+	repeat?: Repeat;
 }
 
-export interface ClubEventDate {
+export interface EventTimeDate {
+	clubs: ClubKey[];
 	title: string;
 	description: string;
 	time: Date;
 	location: string;
-	image: string;
+	image?: EventImage;
 	image_has_info?: boolean; // Setting to true hides the title, description, time, location, and club on card. Careful of accessibility issues.
-	url?: string; // Link to event attendance form.
-	club: ClubKey;
+	url?: string;
+	repeat?: Repeat;
 }

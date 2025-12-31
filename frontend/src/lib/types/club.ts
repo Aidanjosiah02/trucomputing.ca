@@ -19,7 +19,5 @@ export type Social = SocialWithLogo | SocialWithoutLogo;
 export interface Club {
 	name: string;
 	image: string;
-	url: string;
-
 	socials?: Record<string, Social>; // <platform (key), info (value)>
 }

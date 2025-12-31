@@ -4,9 +4,9 @@
 
 	import { H4, P } from '$lib/components/ui/typography/index.js';
 	import { Link } from '$lib/components/ui/link/index.js';
-	import type { Club } from '$lib/types/club';
+	import type { Club, ClubKey, Social } from '$lib/types/club';
 
-	export let clubs: Record<string, Club>;
+	const { selectedClub, clubs }: { selectedClub: Club | undefined; clubs: Record<ClubKey, Club> } = $props();
 
 	// Optionally, general site links
 	const siteLinks = [
@@ -16,7 +16,7 @@
 	];
 
 	// Gather all social links from clubs
-	const socialLinks = Object.values(clubs).flatMap((club) => (club.socials ? Object.values(club.socials) : []));
+	const socials: Record<string, Social> | undefined = $derived(selectedClub?.socials);
 </script>
 
 <footer class="border-t bg-background px-6 py-8">
@@ -25,9 +25,9 @@
 		<div>
 			<H4>Clubs</H4>
 			<ul class="mt-4 space-y-2">
-				{#each Object.values(clubs) as club}
+				{#each Object.entries(clubs) as [slug, club]}
 					<li>
-						<Link href={club.url}>
+						<Link href={`/club/${slug}`}>
 							<div class="flex items-center gap-2">
 								<img src={club.image} alt={club.name} class="h-6 w-6 rounded-sm object-contain" />
 								<span>{club.name}</span>
@@ -42,18 +42,20 @@
 		<div>
 			<H4>Socials</H4>
 			<ul class="mt-4 flex flex-col gap-2">
-				{#each socialLinks as social}
-					<li>
-						<Link href={social.url}>
-							<div class="flex items-center gap-2">
-								{#if social.image}
-									<img src={social.image} alt={social.title} class="h-6 w-6 rounded-sm object-contain" />
-								{/if}
-								<span>{social.title}</span>
-							</div>
-						</Link>
-					</li>
-				{/each}
+				{#if socials}
+					{#each Object.values(socials) as element}
+						<li>
+							<Link href={element.url}>
+								<div class="flex items-center gap-2">
+									{#if element.image}
+										<img src={element.image} alt={element.title} class="h-6 w-6 rounded-sm object-contain" />
+									{/if}
+									<span>{element.title}</span>
+								</div>
+							</Link>
+						</li>
+					{/each}
+				{/if}
 			</ul>
 		</div>
 
