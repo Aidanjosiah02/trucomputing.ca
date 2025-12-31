@@ -1,0 +1,18 @@
+{
+	"navbar": [
+		{
+			"title": "Calendar",
+			"url": "https://calendar.google.com/calendar/embed?src=business%40aidanjosiah.com&ctz=America%2FVancouver"
+		},
+		{
+			"title": "Club Page",
+			"url": "./"
+		}
+	],
+	"hero": {
+		"title": "Computing Science Club Members",
+		"content": "",
+		"color": "white",
+		"image": "/images/heros/alexandre-debieve-FO7JIlwjOtU-unsplash.jpg"
+	}
+}

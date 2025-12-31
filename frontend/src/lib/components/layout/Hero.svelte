@@ -7,9 +7,11 @@
 </script>
 
 <PageHero image={heroData.image}>
-	<Announcement style="color: {heroData.color}" />
+	<!-- <Announcement style="color: {heroData.color}" /> -->
 	<PageHeroHeading class="max-w-4xl" style="color: {heroData.color}">{heroData.title}</PageHeroHeading>
-	<PageHeroDescription style="color: {heroData.color}">{heroData.content}</PageHeroDescription>
+	{#if heroData.content}
+		<PageHeroDescription style="color: {heroData.color}">{heroData.content}</PageHeroDescription>
+	{/if}
 	<!-- <PageActions>
 		<Button size="sm" href="/docs/installation">Get Started</Button>
 		<Button size="sm" variant="ghost" href="/docs/components">View Components</Button>

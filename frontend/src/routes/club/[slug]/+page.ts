@@ -12,12 +12,7 @@ import type { ClubProject } from '$lib/types/project';
 import { repeatEvent } from '$lib/services/events';
 import type { ClubMeeting } from '$lib/types/meeting';
 import { getClubMeetings } from '$lib/services/meetings.js';
-
-function normalizeNavbarUrl(item: HeaderElement, slug: ClubKey): HeaderElement {
-		if (!item.url) return item;
-		if (item.url.startsWith(`/`)) return { ...item, url: `/club/${slug}${item.url}`};
-		return item;
-	};
+import { normalizeNavbarUrl } from '$lib/services/urls';
 
 export async function load({ params }) {
 	const slug = params.slug as ClubKey;
@@ -31,7 +26,7 @@ export async function load({ params }) {
 	const meetingsTimeDate: ClubMeeting[] = clubMeetings.map((meeting) => ({ ...meeting, time: new Date(meeting.time) }));
 
 	try {
-		const page = await import(`$lib/data/pages/${slug}.json`);
+		const page = await import(`$lib/data/pages/${slug}/main.json`);
 		const navbar = (page.navbar).map((item: HeaderElement) => normalizeNavbarUrl(item, slug));
 		return {
 			navbarData: navbar as HeaderElement[],

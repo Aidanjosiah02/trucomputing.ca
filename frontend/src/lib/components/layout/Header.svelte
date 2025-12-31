@@ -120,7 +120,7 @@
 {/snippet}
 
 <header class="sticky top-0 z-50 border-b bg-background/50 py-4 shadow-sm backdrop-blur-sm">
-	<div class="mx-auto grid w-11/12 max-w-7xl grid-cols-[auto_1fr_auto] gap-y-2 lg:items-center">
+	<div class="mx-auto grid w-11/12 max-w-7xl grid-cols-[auto_1fr_auto] gap-y-2 lg:items-center min-h-14">
 		<!-- Club selector -->
 		<div class="col-start-1 row-start-1 mr-2">
 			<DropdownMenu.Root>
@@ -135,8 +135,18 @@
 					{/snippet}
 				</DropdownMenu.Trigger>
 				<DropdownMenu.Content class="w-64" align="start">
+					<DropdownMenu.Item class="cursor-pointer">
+						{#snippet child({ props })}
+							<a href={`/`} {...props}>
+								<!-- <img class="h-8 w-8 shrink-0 rounded-sm object-contain" src={"/"} alt="" /> -->
+								<span class="truncate">Home</span>
+							</a>
+						{/snippet}
+					</DropdownMenu.Item>
+					<DropdownMenu.Separator/>
 					<DropdownMenu.Label>Clubs</DropdownMenu.Label>
 					<DropdownMenu.Group>
+						
 						{#each Object.entries(clubs) as [slug, club]}
 							<DropdownMenu.Item class="cursor-pointer">
 								{#snippet child({ props })}

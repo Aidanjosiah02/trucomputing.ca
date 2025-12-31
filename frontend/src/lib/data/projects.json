@@ -32,7 +32,7 @@
 		"projects": {
 			"sha256_cracker": {
 				"title": "Quantum SHA256 Cracker",
-				"description": "An algorithm for Google's Willow Quantum chip for finding the privat key, given a public key from a private/public SHA256 key pair.",
+				"description": "An algorithm for Google's Willow Quantum chip. Finds the private key for a private/public SHA256 key pair, given an existing public key.",
 				"image": "https://specopssoft.com/wp-content/uploads/2024/10/cracking-SHA256.png",
 				"url": "/"
 			}

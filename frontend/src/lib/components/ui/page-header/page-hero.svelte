@@ -41,7 +41,7 @@
 		</svg>
 	</div>
 
-	<div class="container-wrapper relative min-h-72 md:min-h-80 lg:min-h-88 xl:min-h-96">
+	<div class="container-wrapper relative min-h-68 md:min-h-72 lg:min-h-76 xl:min-h-80">
 		<div class="container m-auto flex max-w-7/8 flex-col items-center gap-2 py-16 text-center md:py-20 lg:py-24 xl:gap-4">
 			{@render children()}
 		</div>

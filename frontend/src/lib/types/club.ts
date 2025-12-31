@@ -16,8 +16,16 @@ interface SocialWithoutLogo {
 
 export type Social = SocialWithLogo | SocialWithoutLogo;
 
+export interface Member {
+	name: string,
+	position: string,
+	description: string,
+	image?: string
+}
+
 export interface Club {
 	name: string;
 	image: string;
 	socials?: Record<string, Social>; // <platform (key), info (value)>
+	members?: Member[];
 }

@@ -18,11 +18,37 @@
 				"title": "Facebook",
 				"image": "https://upload.wikimedia.org/wikipedia/commons/b/b9/2023_Facebook_icon.svg"
 			}
-		}
+		},
+		"members": [
+			{
+				"name": "Aidan Chan",
+				"position": "🫪 Web Developer",
+				"description": "Hunting bugs since 2002.",
+				"image": "https://media.licdn.com/dms/image/v2/D5603AQGFt40r8a8Okg/profile-displayphoto-crop_800_800/B56Zosc0YaIYAI-/0/1761682344351?e=1769040000&v=beta&t=7NnC1Uytn74HZrvSiRjJvpRNsATwnn2ZEUZKDz_YUCU"
+			},
+			{
+				"name": "Jayden",
+				"position": "👑 President",
+				"description": "A pretty cool dude."
+			}
+		]
 	},
 	"cyber": {
 		"name": "Cyber Security",
-		"image": "https://trusu.ca/wp-content/uploads/2024/12/Cyber-Security-Club-1-1.png"
+		"image": "https://trusu.ca/wp-content/uploads/2024/12/Cyber-Security-Club-1-1.png",
+		"members": [
+			{
+				"name": "Aidan Chan",
+				"position": "🫪 Web Developer",
+				"description": "Hunting bugs since 2002.",
+				"image": "https://media.licdn.com/dms/image/v2/D5603AQGFt40r8a8Okg/profile-displayphoto-crop_800_800/B56Zosc0YaIYAI-/0/1761682344351?e=1769040000&v=beta&t=7NnC1Uytn74HZrvSiRjJvpRNsATwnn2ZEUZKDz_YUCU"
+			},
+			{
+				"name": "Patrick",
+				"position": "👑 President",
+				"description": "Another pretty cool dude."
+			}
+		]
 	},
 	"game": {
 		"name": "Game Development",

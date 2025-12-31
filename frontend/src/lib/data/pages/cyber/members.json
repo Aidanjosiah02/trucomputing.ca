@@ -5,18 +5,14 @@
 			"url": "https://calendar.google.com/calendar/embed?src=business%40aidanjosiah.com&ctz=America%2FVancouver"
 		},
 		{
-			"title": "Board Meeting",
-			"url": "#meetings"
-		},
-		{
-			"title": "Members",
-			"url": "/members"
+			"title": "Club Page",
+			"url": "./"
 		}
 	],
 	"hero": {
-		"title": "TRU's Computer Science Club",
+		"title": "Cyber Security Club Members",
 		"content": "",
 		"color": "white",
-		"image": "/images/heros/alexandre-debieve-FO7JIlwjOtU-unsplash.jpg"
+		"image": "https://mike.id/preview/matrix.jpg"
 	}
 }
