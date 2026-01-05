@@ -18,6 +18,7 @@
 		"noPropertyAccessFromIndexSignature": true,
 		"noImplicitThis": true,
 		"strictNullChecks": true
+		// "types": ["@cloudflare/workers-types"]
 	}
 	// "compilerOptions": {
 

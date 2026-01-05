@@ -1,10 +1,28 @@
 {
-  "$schema": "./node_modules/wrangler/config-schema.json",
-  "d1_databases": [
-    {
-      "binding": "trucomputing_d1",
-      "database_name": "prod-d1-tutorial",
-      "database_id": "<unique-ID-for-your-database>"
-    }
-  ]
+	"$schema": "./node_modules/wrangler/config-schema.json",
+	"name": "trucomputing",
+	"main": ".svelte-kit/cloudflare/_worker.js",
+	"compatibility_flags": [
+		"nodejs_compat"
+	],
+	"compatibility_date": "2026-01-05",
+	"assets": {
+		"binding": "ASSETS",
+		"directory": ".svelte-kit/cloudflare"
+	},
+	"observability": {
+		"enabled": true
+	},
+	"d1_databases": [
+		{
+			"binding": "trucomputing_d1",
+			"database_name": "prod-d1-tutorial",
+			"database_id": "<unique-ID-for-your-database>"
+		},
+		{
+			"binding": "my_db_name",
+			"database_name": "my-db-name",
+			"database_id": "863e0366-a2ba-4f48-825f-03d70bd523f6"
+		}
+	]
 }
