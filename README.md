@@ -10,7 +10,6 @@ cd trucomputing.ca
 nvm install latest
 nvm use latest
 
-cd frontend
 npm install
 ```
 
@@ -81,6 +80,8 @@ PS C:\Users\user\OneDrive - Thompson Rivers University\Documents\Vault\Projects\
 └  You're all set!
 ```
 
-### To-do
+### Setting up DB:
+`npx wrangler d1 execute trucomputing_d1 --local --file ./schema.sql`
 
-Check if page data currently is loading before or after rendering starts. If after, use a +page.ts module that exports a load function.
+
+
