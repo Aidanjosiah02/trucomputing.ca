@@ -18,12 +18,18 @@
 	const projects = $derived(data.projects);
 	const meetings = $derived(data.meetings);
 	const selectedClub = $derived(data.selectedClub);
+	const test = $derived(data.test);
 
 
 </script>
 
 <Header {selectedClub} {clubs} {navbarData} />
 <Hero {heroData} />
+
+<section class="m-auto my-16 flex w-11/12 flex-col gap-8">
+	<H1 class="text-center">test</H1>
+	<p>{test}</p>
+</section>
 
 <section class="m-auto my-16 flex w-11/12 flex-col gap-8">
 	<H1 class="text-center">Upcoming Events</H1>

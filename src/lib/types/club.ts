@@ -26,6 +26,7 @@ export interface Member {
 export interface Club {
 	name: string;
 	image: string;
+	calendarId: `${string}@${string}`;
 	socials?: Record<string, Social>; // <platform (key), info (value)>
 	members?: Member[];
 }

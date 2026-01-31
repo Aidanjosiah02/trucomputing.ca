@@ -17,6 +17,7 @@
 	const events = $derived(data.events);
 	const topProjects = $derived(data.topProjects);
 	const selectedClub = $derived(data.selectedClub);
+
 </script>
 
 <Header {selectedClub} {clubs} {navbarData} />

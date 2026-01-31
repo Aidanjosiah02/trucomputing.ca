@@ -14,7 +14,7 @@ import type { ClubMeeting } from '$lib/types/meeting';
 import { getClubMeetings } from '$lib/services/meetings.js';
 import { normalizeNavbarUrl } from '$lib/services/urls';
 
-export async function load({ params }) {
+export async function load({ params, data }) {
 	const slug = params.slug as ClubKey;
 
 	const eventsTimeString = events.filter((event) => event.clubs.includes(slug)) as EventTimeString[];
@@ -36,6 +36,7 @@ export async function load({ params }) {
 			selectedClub: clubs[slug] as Club,
 			events: normalizedEvents as EventTimeDate[],
 			projects: getClubProjects(projects, slug) as ClubProject[] ?? undefined,
+			test: data.test,
 			meetings: meetingsTimeDate ?? undefined,
 		};
 	} catch (e) {
