@@ -8,11 +8,13 @@ export interface EventTimeString {
 	time: {
 		start: string;
 		end: string;
-	}
+		timeZone: string;
+	} | null
 	location: string;
-	image?: EventImage;
-	url?: string;
+	image: EventImage | null;
+	url: string | null;
 	repeat?: Repeat;
+	isMeeting?: boolean;
 }
 
 export interface EventTimeDate {
@@ -22,6 +24,7 @@ export interface EventTimeDate {
 	time: {
 		start: Date;
 		end: Date;
+		timeZone: string;
 	} | null
 	location: string;
 	image: EventImage | null;

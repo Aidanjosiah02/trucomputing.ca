@@ -2,7 +2,7 @@
 	"comp": {
 		"name": "Computing Science",
 		"image": "https://trusu.ca/wp-content/uploads/2024/12/Computer-Science-Club-.webp",
-		"calendarId": "business@aidanjosiah.com",
+		"calendarId": "06464c0875d58a2663cc81aeabdf930cf0a2f303ca0bb1ad811a0c41653ae2e4@group.calendar.google.com",
 		"socials": {
 			"discord": {
 				"url": "https://discord.gg/UEGuccvBRy",
@@ -23,9 +23,9 @@
 		"members": [
 			{
 				"name": "Aidan Chan",
-				"position": "🫪 Web Developer",
+				"position": "Web Developer",
 				"description": "Hunting bugs since 2002.",
-				"image": "https://media.licdn.com/dms/image/v2/D5603AQGFt40r8a8Okg/profile-displayphoto-crop_800_800/B56Zosc0YaIYAI-/0/1761682344351?e=1769040000&v=beta&t=7NnC1Uytn74HZrvSiRjJvpRNsATwnn2ZEUZKDz_YUCU"
+				"image": "/images/members/Aidan_Chan.jpg"
 			},
 			{
 				"name": "Jayden",
@@ -37,13 +37,13 @@
 	"cyber": {
 		"name": "Cyber Security",
 		"image": "https://trusu.ca/wp-content/uploads/2024/12/Cyber-Security-Club-1-1.png",
-		"calendarId": "business@aidanjosiah.com",
+		"calendarId": "",
 		"members": [
 			{
 				"name": "Aidan Chan",
-				"position": "🫪 Web Developer",
+				"position": "Web Developer",
 				"description": "Hunting bugs since 2002.",
-				"image": "https://media.licdn.com/dms/image/v2/D5603AQGFt40r8a8Okg/profile-displayphoto-crop_800_800/B56Zosc0YaIYAI-/0/1761682344351?e=1769040000&v=beta&t=7NnC1Uytn74HZrvSiRjJvpRNsATwnn2ZEUZKDz_YUCU"
+				"image": "/images/members/Aidan_Chan.jpg"
 			},
 			{
 				"name": "Patrick",
@@ -55,6 +55,6 @@
 	"game": {
 		"name": "Game Development",
 		"image": "https://trusu.ca/wp-content/uploads/2024/12/Game-Development-Club-1-1.webp",
-		"calendarId": "business@aidanjosiah.com"
+		"calendarId": ""
 	}
 }

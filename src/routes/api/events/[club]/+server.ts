@@ -6,6 +6,9 @@ import { json } from '@sveltejs/kit';
 
 export async function GET({ params }) {
 	const slug = params.club as ClubKey;
+	if (!clubs[slug].calendarId) {
+		return json([]);
+	}
 
 	const rawEvents = await getEvents(clubs[slug].calendarId);
 	const events = rawEvents.map(e => convertEvent(e, slug));

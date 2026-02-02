@@ -1,11 +1,11 @@
 import { IMAGE_EXTENSIONS, IMAGE_MIME_PREFIX } from '$lib/constants';
 import { eventsStore } from '$lib/stores/events';
 import type { ClubKey } from '$lib/types/club';
-import type { EventTimeDate } from '$lib/types/event';
+import type { EventTimeDate, EventTimeString } from '$lib/types/event';
 import type { calendar_v3 } from 'googleapis';
 import { get } from 'svelte/store';
 
-export function convertEvent(event: calendar_v3.Schema$Event, club: ClubKey): EventTimeDate {
+export function convertEvent(event: calendar_v3.Schema$Event, club: ClubKey): EventTimeString {
 
     let custom: Record<string, unknown> = {};
     let cleanDescription = '';
@@ -22,15 +22,19 @@ export function convertEvent(event: calendar_v3.Schema$Event, club: ClubKey): Ev
 
     const startDateTime = event.start?.dateTime;
     const endDateTime = event.end?.dateTime;
-    const hasTime = startDateTime && endDateTime;
+    const timeZone = event.start?.timeZone;
+    const hasTime = startDateTime && endDateTime && timeZone;
 
-    const baseEvent: EventTimeDate = {
+    console.log(event);
+
+    const baseEvent: EventTimeString = {
         clubs: [club],
         title: event.summary ?? '',
         description: cleanDescription,
         time: hasTime ? {
-            start: new Date(startDateTime),
-            end: new Date(endDateTime)
+            start: startDateTime,
+            end: endDateTime,
+            timeZone: timeZone
         } : null,
         location: event.location ?? '',
         image: images[0] ? {
@@ -107,6 +111,13 @@ function isAttachmentImage(attachment: calendar_v3.Schema$EventAttachment): bool
     return IMAGE_EXTENSIONS.some((extension) => url.toLowerCase().endsWith(extension));
 }
 
+
+
+
+// ---------------------- client side below --------------------//
+
+
+
 export function partitionEvents(events: EventTimeDate[]) {
 	const meetings: EventTimeDate[] = [];
 	const nonMeetings: EventTimeDate[] = [];
@@ -132,7 +143,24 @@ export async function ensureClubEvents(slug: ClubKey, fetch: typeof window.fetch
         return;
     }
 
-    const events: EventTimeDate[] = await result.json();
+    const rawEvents: EventTimeString[] = await result.json();
+    const events: EventTimeDate[] = rawEvents.map((event) => timeStringToDate(event));
     const { meetings, nonMeetings } = partitionEvents(events);
     eventsStore.update(store => ({...store, [slug]: {events: nonMeetings, meetings}}));
+}
+
+
+function timeStringToDate(event: EventTimeString): EventTimeDate {
+    if (!event.time) {
+        return event as EventTimeDate;
+    }
+
+    return {
+        ...event, 
+        time: {
+            start: new Date(event.time.start),
+            end: new Date(event.time.end),
+            timeZone: event.time.timeZone
+        }
+    };
 }

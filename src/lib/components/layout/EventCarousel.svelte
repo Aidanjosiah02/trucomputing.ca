@@ -5,6 +5,7 @@
 	import type { EventTimeDate } from '$lib/types/event';
 	import * as Card from '$lib/components/ui/card/index.js';
 	import type { Club, ClubKey } from '$lib/types/club';
+	import Separator from '../ui/separator/separator.svelte';
 
 	let { events, clubs }: { events: EventTimeDate[]; clubs: Record<ClubKey, Club> } = $props();
 </script>
@@ -31,10 +32,13 @@
 										{/each}
 									</div>
 								</div>
+								<Separator/>
 								{#if event.time}
-									<Large>Time: {event.time.start.toLocaleString()} to {event.time.end.toLocaleString()}</Large>
+									<Large>Time: {event.time.start.toLocaleString()}<br>to {event.time.end.toLocaleString()}</Large>
 								{/if}
+								<Separator/>
 								<Large>Location: {event.location}</Large>
+								<Separator/>
 								<P>{event.description}</P>
 							{/if}
 							{#if event.url}
