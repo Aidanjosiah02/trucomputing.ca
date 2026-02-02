@@ -8,35 +8,40 @@
 	import { Separator } from '$lib/components/ui/separator';
 	import EventCarousel from '$lib/components/layout/EventCarousel.svelte';
 	import ProjectCollection from '$lib/components/layout/ProjectCollection.svelte';
-	import MeetingList from '$lib/components/layout/MeetingList.svelte';
 
 	const { data }: { data: PageData } = $props();
 	const navbarData = $derived(data.navbarData);
 	const heroData = $derived(data.heroData);
 	const clubs = $derived(data.clubs);
-	const events = $derived(data.events);
 	const projects = $derived(data.projects);
-	const meetings = $derived(data.meetings);
-	const selectedClub = $derived(data.selectedClub);
-	const test = $derived(data.test);
+	const slug = $derived(data.slug);
 
-
+	import { eventsStore } from '$lib/stores/events';
+	const clubEvents = $derived($eventsStore[slug]);
+	const events = $derived(clubEvents?.events);
+	const meetingEvents = $derived(clubEvents?.meetings);
 </script>
 
-<Header {selectedClub} {clubs} {navbarData} />
+<Header selectedClub={clubs[slug]} {clubs} {navbarData} />
 <Hero {heroData} />
 
-<section class="m-auto my-16 flex w-11/12 flex-col gap-8">
-	<H1 class="text-center">test</H1>
-	<p>{test}</p>
-</section>
+{#if events}
+	<section class="m-auto my-16 flex w-11/12 flex-col gap-8">
+		<H1 class="text-center">Upcoming Events</H1>
+		<Separator />
+		<EventCarousel {events} {clubs} />
+		<Separator />
+	</section>
+{/if}
 
-<section class="m-auto my-16 flex w-11/12 flex-col gap-8">
-	<H1 class="text-center">Upcoming Events</H1>
-	<Separator />
-	<EventCarousel {events} {clubs} />
-	<Separator />
-</section>
+{#if meetingEvents}
+	<section class="m-auto my-16 flex w-11/12 flex-col gap-8" id="meetings">
+		<H1 class="text-center">Meetings</H1>
+		<Separator />
+		<EventCarousel events={meetingEvents} {clubs} />
+		<Separator />
+	</section>
+{/if}
 
 {#if projects}
 	<section class="m-auto my-16 flex w-11/12 flex-col gap-8">
@@ -47,13 +52,4 @@
 	</section>
 {/if}
 
-{#if meetings}
-	<section class="m-auto my-16 flex w-11/12 flex-col gap-8" id="meetings">
-		<H1 class="text-center">Meetings</H1>
-		<Separator />
-		<MeetingList {meetings} {clubs} />
-		<Separator />
-	</section>
-{/if}
-
-<Footer {selectedClub} {clubs} />
+<Footer selectedClub={clubs[slug]} {clubs} />

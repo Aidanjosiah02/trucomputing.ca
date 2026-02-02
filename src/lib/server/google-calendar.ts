@@ -1,6 +1,6 @@
 import { google } from "googleapis";
-
 import { GOOGLE_SERVICE_ACCOUNT_JSON } from '$env/static/private';
+import { MAX_CALENDAR_EVENTS } from "$lib/constants";
 
 const credentials = JSON.parse(GOOGLE_SERVICE_ACCOUNT_JSON);
 
@@ -19,7 +19,7 @@ export async function getEvents(calendarId: string) {
 		timeMin: new Date().toISOString(),
 		singleEvents: true,
 		orderBy: 'startTime',
-		maxResults: 10
+		maxResults: MAX_CALENDAR_EVENTS
 	});
 	const events = res.data.items ?? []; 
 	return events;

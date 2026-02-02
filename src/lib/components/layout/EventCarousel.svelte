@@ -16,7 +16,7 @@
 				<div class="h-full p-1">
 					<Card.Root class="h-full w-full">
 						<Card.Content class="flex aspect-square flex-col items-start gap-2">
-							<img src={event.image?.url} alt="" />
+							<img src={event.image?.url} alt=""/>
 							{#if !event.image?.has_info}
 								<div class="flex w-full items-center justify-between gap-2">
 									<H3 class="flex-3">{event.title}</H3>
@@ -31,7 +31,9 @@
 										{/each}
 									</div>
 								</div>
-								<Large>Time: {event.time.toLocaleString()}</Large>
+								{#if event.time}
+									<Large>Time: {event.time.start.toLocaleString()} to {event.time.end.toLocaleString()}</Large>
+								{/if}
 								<Large>Location: {event.location}</Large>
 								<P>{event.description}</P>
 							{/if}

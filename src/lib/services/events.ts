@@ -1,67 +1,121 @@
-import type { Repeat } from '$lib/types/common';
+import { IMAGE_EXTENSIONS, IMAGE_MIME_PREFIX } from '$lib/constants';
+import type { ClubKey } from '$lib/types/club';
 import type { EventTimeDate } from '$lib/types/event';
+import type { calendar_v3 } from 'googleapis';
 
-export function repeatEvent(event: EventTimeDate): EventTimeDate[] {
-	if (!event.repeat) return [event];
-	const { times, every, unit } = event.repeat;
+export function convertEvent(event: calendar_v3.Schema$Event, club: ClubKey): EventTimeDate {
 
-	// Pick which date component we are incrementing
-	let dateAccessors: {
-		get: (date: Date) => number;
-		set: (date: Date, value: number) => void;
-	};
-	switch (unit) {
-		case "hours":
-			dateAccessors = {
-				get: (date) => date.getHours(),
-				set: (date, value) => date.setHours(value)
-			};
-			break;
-		case "days":
-		case "weeks":
-			dateAccessors = {
-				get: (date) => date.getDate(),
-				set: (date, value) => date.setDate(value)
-			};
-			break;
-		default:
-			return [event];
-	}
+    let custom: Record<string, unknown> = {};
+    let cleanDescription = '';
+    const imageSize = 512; // Make modifiable through Description json later on.
+    if (event.description) {
+        ({ custom, cleanDescription } = parseDescription(event.description));
+    }
 
-	const result: EventTimeDate[] = [];
-	for (let value = 0; value < times; value++) {
-		const newEvent = { ...event };
-		const baseDate = new Date(event.time);
+    let images: string[] = [];
+    if (event.attachments) {
+        const imageObjects = (event.attachments).filter((attachment) => isAttachmentImage(attachment))
+        images = imageObjects.flatMap((image) => image.fileId ? `https://drive.google.com/thumbnail?id=${image.fileId}&sz=s${imageSize}` : []);
+    }
 
-		let increment = every * value;
-		if (unit === "weeks") increment *= 7;
+    const startDateTime = event.start?.dateTime;
+    const endDateTime = event.end?.dateTime;
+    const hasTime = startDateTime && endDateTime;
 
-		const currentValue = dateAccessors.get(baseDate);
-		dateAccessors.set(baseDate, currentValue + increment);
-		newEvent.time = baseDate;
-		delete newEvent.repeat;
+    const baseEvent: EventTimeDate = {
+        clubs: [club],
+        title: event.summary ?? '',
+        description: cleanDescription,
+        time: hasTime ? {
+            start: new Date(startDateTime),
+            end: new Date(endDateTime)
+        } : null,
+        location: event.location ?? '',
+        image: images[0] ? {
+            url: images[0],
+            has_info: false
+        } : null,
+        url: null
+    }
 
-		result.push(newEvent);
-	}
-	return result;
+    const newEvent = {...baseEvent, ...custom};
+    console.log(newEvent.image)
+    return newEvent;
 }
 
-export function getLastDate(start: Date, repeat: Repeat): Date {
-    if (repeat.times == 0) {
-        return new Date(start);
+// Description can optionally have a json object to replace parts of the event json.
+// In Google Calendar event description, type:
+// <json>
+//     {
+//         "clubs": ["comp", "cyber"],
+//         "url": "some_link"
+//         ...
+//     }
+// </json>
+// ...Description text...
+function parseDescription(description?: string): {custom: Record<string, unknown>; cleanDescription: string;} {
+	if (!description) {
+		return { custom: {}, cleanDescription: '' };
+	}
+	description = decodeHtmlEntities(description);
+	const jsonRegex = /<json>([\s\S]*?)<\/json>/i;
+	const match = description.match(jsonRegex);
+
+	let custom: Record<string, unknown> = {};
+
+	if (match && match[1]) {
+		let jsonText = match[1].trim();
+
+		if (jsonText) {
+            // Remove all HTML tags inside <json> block
+            jsonText = jsonText.replace(/<[^>]+>/g, '');
+            // Remove whitespace/newlines.
+            jsonText = jsonText.replace(/\s+/g, '').trim();
+            console.log(jsonText)
+			try {
+				custom = JSON.parse(jsonText);
+			} catch (err) {
+				console.error('Invalid JSON in description:', err);
+			}
+		}
+	}
+
+	const cleanDescription = description.replace(jsonRegex, '').trim();
+	return {custom, cleanDescription};
+}
+
+function decodeHtmlEntities(input: string): string {
+    return input
+        .replace(/&lt;/g, '<')
+        .replace(/&gt;/g, '>')
+        .replace(/&amp;/g, '&')
+        .replace(/&quot;/g, '"')
+        .replace(/&#39;/g, "'")
+        .replace(/<br\s*\/?>/gi, '\n');
+}
+
+function isAttachmentImage(attachment: calendar_v3.Schema$EventAttachment): boolean {
+    // MIME type check
+    if (attachment.mimeType?.startsWith(IMAGE_MIME_PREFIX)) {
+        return true;
     }
-	
-    const result = new Date(start);
-    switch (repeat.unit) {
-        case 'hours':
-            result.setHours(result.getHours() + repeat.every * repeat.times);
-            break;
-        case 'days':
-            result.setDate(result.getDate() + repeat.every * repeat.times);
-            break;
-        case 'weeks':
-            result.setDate(result.getDate() + repeat.every * repeat.times * 7);
-            break;
-    }
-    return result;
+
+    // Fallback file extension check
+    const url = attachment.fileUrl ?? attachment.title ?? '';
+    return IMAGE_EXTENSIONS.some((extension) => url.toLowerCase().endsWith(extension));
+}
+
+export function partitionEvents(events: EventTimeDate[]) {
+	const meetings: EventTimeDate[] = [];
+	const nonMeetings: EventTimeDate[] = [];
+
+	for (const event of events) {
+		if (event.isMeeting == true || event.title?.toLowerCase().endsWith('meeting')) {
+			meetings.push(event);
+		} else {
+			nonMeetings.push(event);
+		}
+	}
+
+	return { meetings, nonMeetings };
 }

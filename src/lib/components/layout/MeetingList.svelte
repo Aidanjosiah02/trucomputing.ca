@@ -1,7 +1,7 @@
 <script lang="ts">
 	import * as Card from '$lib/components/ui/card/index.js';
 	import { H3, P, Small } from '$lib/components/ui/typography/index.js';
-	import { getLastDate } from '$lib/services/events';
+	// import { getLastDate } from '$lib/services/events';
 	import type { Club, ClubKey } from '$lib/types/club';
 	import type { ClubMeeting } from '$lib/types/meeting';
 	import Large from '../ui/typography/Large.svelte';
