@@ -11,7 +11,7 @@ export async function GET({ params }) {
 	}
 
 	const rawEvents = await getEvents(clubs[slug].calendarId);
-	const events = rawEvents.map(e => convertEvent(e, slug));
+	const events = rawEvents.map(event => convertEvent(event, slug));
 
 	return json(events);
 }

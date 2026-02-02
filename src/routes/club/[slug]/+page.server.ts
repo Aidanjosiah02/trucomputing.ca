@@ -1,5 +1,4 @@
 import clubs from '$lib/data/clubs.json'
-import { error } from '@sveltejs/kit';
 import type { ClubKey } from '$lib/types/club';
 import { getEvents } from '$lib/server/calendar';
 import { convertEvent } from '$lib/server/events';

@@ -17,8 +17,13 @@ export async function load() {
 		}
 
 		const rawEvents = await getEvents(calendarId);
-		const converted = rawEvents.map(e => convertEvent(e, slug));
-		allEvents.push(...converted);
+		const converted = rawEvents.map(event => convertEvent(event, slug));
+		
+		for (const event of converted) {
+			if (!event.is_meeting == true && !event.title?.toLowerCase().endsWith('meeting')) {
+				allEvents.push(event);
+			}
+		}
 	}
 
 	return {
