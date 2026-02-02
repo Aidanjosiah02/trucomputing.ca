@@ -3,23 +3,20 @@ import page from '$lib/data/pages/home.json';
 import projects from '$lib/data/projects.json';
 
 import { getTopProjects } from '$lib/services/projects';
-import { ensureClubEvents } from '$lib/services/events';
-import { eventsStore } from '$lib/stores/events';
-import { get } from 'svelte/store';
 
 import type { HeaderElement, Hero } from '$lib/types/page';
 import type { Club, ClubKey } from '$lib/types/club';
 import type { ClubProject } from '$lib/types/project';
 import type { EventTimeDate } from '$lib/types/event';
 
-export async function load({ fetch }) {
-	await Promise.all((Object.keys(clubs) as ClubKey[]).map(slug => ensureClubEvents(slug, fetch)));
-
-	const store = get(eventsStore);
+export function load({ data }) {
 	const homeEvents: EventTimeDate[] = [];
+
 	for (const slug of Object.keys(clubs) as ClubKey[]) {
-		const clubEvents = store[slug]?.events ?? [];
-		homeEvents.push(...clubEvents.slice(0, 3)); // take first 2
+		const clubEvents = data.serverEvents.filter(e =>
+			e.clubs.includes(slug)
+		);
+		homeEvents.push(...clubEvents.slice(0, 3));
 	}
 
 	homeEvents.sort((a, b) => {

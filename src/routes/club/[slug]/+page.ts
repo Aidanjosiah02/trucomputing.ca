@@ -8,21 +8,14 @@ import type { ClubProject } from '$lib/types/project';
 import { error } from '@sveltejs/kit';
 import { getClubProjects } from '$lib/services/projects';
 import { normalizeNavbarUrl } from '$lib/services/urls';
-import { ensureClubEvents } from '$lib/services/events';
-import { get } from 'svelte/store';
 import type { EventTimeDate } from '$lib/types/event';
-import { eventsStore } from '$lib/stores/events';
 
 
-export async function load({ params, fetch }) {
+export async function load({ params, data }) {
 	const slug = params.slug as ClubKey;
 
-	// Store events so a request is not needed every navigation.
-	await ensureClubEvents(slug, fetch);
-
-	const clubEvents = get(eventsStore)[slug] ?? { events: [], meetings: [] };
-	const events: EventTimeDate[] = clubEvents.events ?? [];
-	const meetings: EventTimeDate[] = (clubEvents.meetings ?? []).slice(0, 3);
+	const events: EventTimeDate[] = data.serverEvents ?? [];
+	const meetings: EventTimeDate[] = events.slice(0, 3);
 
 	try {
 		const page = await import(`$lib/data/pages/${slug}/main.json`);
