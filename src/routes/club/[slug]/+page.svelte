@@ -25,7 +25,7 @@
 <Header {selectedClub} {clubs} {navbarData} />
 <Hero {heroData} />
 
-{#if events}
+{#if events.length}
 	<section class="m-auto my-16 flex w-11/12 flex-col gap-8">
 		<H1 class="text-center">Upcoming Events</H1>
 		<Separator />
@@ -34,7 +34,7 @@
 	</section>
 {/if}
 
-{#if meetings}
+{#if meetings.length}
 	<section class="m-auto my-16 flex w-11/12 flex-col gap-8" id="meetings">
 		<H1 class="text-center">Meetings</H1>
 		<Separator />
@@ -43,7 +43,7 @@
 	</section>
 {/if}
 
-{#if projects}
+{#if projects.length}
 	<section class="m-auto my-16 flex w-11/12 flex-col gap-8">
 		<H1 class="text-center">Club Projects</H1>
 		<Separator />

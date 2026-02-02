@@ -14,7 +14,7 @@ export interface EventTimeString {
 	image: EventImage | null;
 	url: string | null;
 	repeat?: Repeat;
-	isMeeting?: boolean;
+	is_meeting?: boolean;
 }
 
 export interface EventTimeDate {
@@ -30,5 +30,5 @@ export interface EventTimeDate {
 	image: EventImage | null;
 	url: string | null;
 	repeat?: Repeat;
-	isMeeting?: boolean;
+	is_meeting?: boolean;
 }

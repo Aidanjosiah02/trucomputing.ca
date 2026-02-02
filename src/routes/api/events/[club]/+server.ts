@@ -1,6 +1,6 @@
 import clubs from '$lib/data/clubs.json';
-import { getEvents } from '$lib/server/google-calendar';
-import { convertEvent } from '$lib/services/events';
+import { getEvents } from '$lib/server/calendar';
+import { convertEvent } from '$lib/server/events';
 import type { ClubKey } from '$lib/types/club';
 import { json } from '@sveltejs/kit';
 

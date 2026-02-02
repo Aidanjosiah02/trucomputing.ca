@@ -22,7 +22,7 @@ export async function load({ params, fetch }) {
 
 	const clubEvents = get(eventsStore)[slug] ?? { events: [], meetings: [] };
 	const events: EventTimeDate[] = clubEvents.events ?? [];
-	const meetings: EventTimeDate[] = clubEvents.meetings ?? [];
+	const meetings: EventTimeDate[] = (clubEvents.meetings ?? []).slice(0, 3);
 
 	try {
 		const page = await import(`$lib/data/pages/${slug}/main.json`);

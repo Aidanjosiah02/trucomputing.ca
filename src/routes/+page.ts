@@ -19,7 +19,7 @@ export async function load({ fetch }) {
 	const homeEvents: EventTimeDate[] = [];
 	for (const slug of Object.keys(clubs) as ClubKey[]) {
 		const clubEvents = store[slug]?.events ?? [];
-		homeEvents.push(...clubEvents.slice(0, 2)); // take first 2
+		homeEvents.push(...clubEvents.slice(0, 3)); // take first 2
 	}
 
 	homeEvents.sort((a, b) => {
