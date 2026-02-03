@@ -28,7 +28,7 @@ export async function load({ params, data }) {
 			clubs: clubs as Record<ClubKey, Club>,
 			slug,
 			projects: getClubProjects(projects, slug) as ClubProject[] ?? undefined,
-			events: nonMeetings,
+			events: nonMeetings ?? [],
 			meetings: (meetings ?? []).slice(0, 3)
 		};
 	} catch (e) {

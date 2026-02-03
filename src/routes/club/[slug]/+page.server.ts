@@ -9,7 +9,7 @@ export async function load({ params }) {
 	const calendarId = clubs[slug].calendarId;
 	if (!calendarId) {
 		console.warn(`No calendarId for club: ${slug}`);
-		return {serverEvents: { events: [], meetings: [] }};
+		return {serverEvents: []};
 	}
 	const rawEvents = await getEvents(calendarId);
 
